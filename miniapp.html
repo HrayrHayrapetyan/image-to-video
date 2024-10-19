@@ -12,14 +12,15 @@
 
   <body>
     <div class="container">
-      <input type="file" id="file-input" accept="image/png,image/jpeg">
+      <input type="file" id="file-input" accept="image/png,image/jpeg" onchange='preview()' multiple>
       <label for="file-input">
         <i class="fa-solid fa-upload"></i> &nbsp; Choose A Photo
       </label>
-
+      <p id="num-of-files">No Files Choosen</p>
+      <div id="images"> </div>  
      </div>
 
-    <p> </p>
+ 
 
     <script src="script.js"> </script>
   </body>
