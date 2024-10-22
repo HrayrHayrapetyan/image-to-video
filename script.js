@@ -12,12 +12,14 @@ function preview(){
         let figCap=document.createElement('figcaption')
         figCap.innerText=i.name
         figure.appendChild(figCap)
-        reader.Onload=()=>{
+        reader.onload=()=>{
             let img=document.createElement('img')
-            img.setAtribute('src',reader.result)
+            img.setAttribute('src',reader.result)
             figure.insertBefore(img,figCap)
         }
         imageContainer.appendChild(figure)
-        reader.readAsDaraURL(i)
-        
+        reader.readAsDataURL(i) 
     }
+}
+
+
