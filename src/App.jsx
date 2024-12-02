@@ -30,8 +30,14 @@ function App() {
           const response=await axios.post('http://localhost:5000/upload-images',formdata,{
             headers:{
               'Content-Type':'multipart/form-data',
-            }
+            },
+            responseType: 'blob',        
           })
+
+          const videoBlob = new Blob([response.data], { type: 'video/mp4' });
+          const videoUrl = URL.createObjectURL(videoBlob);
+
+          setVideoUrl(videoUrl);
 
           console.log('Response from backend',response);
 
@@ -51,18 +57,42 @@ return (
         <h1>Miniapp</h1>
         <p>Please Upload Your Images</p>
         <input type="file" accept="image/*" multiple className="upload-button" onChange={handleFileChange} />
-        <div className="previews">{previews.map((image)=>{
-            return <img src={URL.createObjectURL(image)} key={uuidv4()}/>
-        })}
-        </div>
+        <div className="previews" style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                {previews.map((image) => (
+                    <img
+                        src={URL.createObjectURL(image)}
+                        key={uuidv4()}
+                        alt="preview"
+                        style={{
+                            width: "150px",
+                            height: "150px",
+                            margin: "10px",
+                            objectFit: "cover",
+                            border: "1px solid #ddd",
+                            borderRadius: "8px",
+                        }}
+                    />
+                ))}
+            </div>
 
         <button onClick={convertToVideo} disabled={loading}>
             {loading ? 'Creating Video...' : 'Create Video'}
         </button>        
-            {videoUrl && (
-                <video >
-                    <source src={videoUrl} type="video/mp4"/>
-                </video>
+        {videoUrl && (
+                <div style={{ marginTop: "20px" }}>
+                    <h2>Your Video:</h2>
+                    <video
+                        controls
+                        style={{
+                            width: "80%",
+                            maxWidth: "600px",
+                            margin: "auto",
+                            display: "block",
+                        }}
+                    >
+                        <source src={videoUrl} type="video/mp4" />
+                    </video>
+                </div>
         )
         }
     </div>
@@ -73,3 +103,4 @@ return (
 
  
 export default App;
+
