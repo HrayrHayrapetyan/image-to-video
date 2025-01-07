@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
 
 
-function App() {
+function VideoMaker() {
     const [previews,setPreviews]=useState([])
     const [ready,setReady]=useState(false)
     const [videoUrl,setVideoUrl]=useState()
@@ -24,10 +24,9 @@ function App() {
         for(let i=0;i<previews.length;i++){
           formdata.append('images',previews[i])
         }
-        
-
+                
         try{
-          const response=await axios.post('http://localhost:5000/upload-images',formdata,{
+          const response=await axios.post('http://localhost:5001/upload-images',formdata,{
             headers:{
               'Content-Type':'multipart/form-data',
             },
@@ -102,5 +101,5 @@ return (
 
 
  
-export default App;
+export default VideoMaker;
 

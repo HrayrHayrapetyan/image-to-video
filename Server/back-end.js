@@ -8,7 +8,7 @@ const cors = require("cors");
 const { exec } = require("child_process");
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 app.use(cors());
 
@@ -32,6 +32,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post("/upload-images", upload.array("images", 10), (req, res) => {
+  console.log('inside upload images')
   if (!req.files || req.files.length === 0) {
     return res.status(400).send("No images uploaded");
   }
@@ -45,7 +46,7 @@ app.post("/upload-images", upload.array("images", 10), (req, res) => {
   console.log("imagepaths", imagePaths);
   console.log("VideoPath", videoPath);
 
-  const command = `python3 createVideo.py "${imagePaths
+  const command = `python3 generate-video.py "${imagePaths
     .map((p) => `"${p}"`)
     .join(",")}" "${videoPath}"`;
 
